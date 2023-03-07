@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Lokalizacja użytkownika</title>
+  </head>
+  <body>
+    <h1>Lokalizacja użytkownika</h1>
+    <p>Podaj swoją szerokość geograficzną:</p>
+    <input type="text" id="latitude">
+    <p>Podaj swoją długość geograficzną:</p>
+    <input type="text" id="longitude">
+    <br><br>
+    <button onclick="getLocation()">Pokaż moją lokalizację</button>
+    <br><br>
+    <div id="location"></div>
+  </body>
+  <script>
+    function getLocation() {
+      var latitude = document.getElementById("latitude").value;
+      var longitude = document.getElementById("longitude").value;
+
+      // Obliczanie zakresu błędu
+      var error = Math.floor(Math.random() * 20) + 1; // losowa wartość z zakresu 1-20
+      var latitudeError = error / 111000; // 1 stopień szerokości geograficznej to około 111 km
+      var longitudeError = error / (111000 * Math.cos(latitude * Math.PI / 180)); // 1 stopień długości geograficznej to około 111 km * cos(szerokość geograficzna)
+
+      // Tworzenie linku do Google Maps
+      var googleMapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+
+      // Wyświetlanie wyników
+      var locationDiv = document.getElementById("location");
+      locationDiv.innerHTML = "<p>Szerokość geograficzna: " + latitude + "</p>" +
+                              "<p>Długość geograficzna: " + longitude + "</p>" +
+                              "<p>Zakres błędu: " + error + " metrów</p>" +
+                              "<p><a href='" + googleMapsLink + "' target='_blank'>Link do Google Maps</a></p>";
+    }
+  </script>
+</html>
